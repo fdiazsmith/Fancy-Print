@@ -29,16 +29,22 @@ void setup() {
   while (!Serial);
    // needed to keep leonardo/micro from starting too fast!
   #if FANCY_SERIAL_DEBUG
-    if(!fancy.init(115200)){
-      Serial.begin(115200);Serial.print("FAILED");
+    if(!fancy.init(9600)){
+      Serial.begin(9600);Serial.print("FAILED");
     }
   #else
-    Serial.begin(115200);
+    Serial.begin(9600);
    Serial.println(NAME);
    Serial.println(VERSION);
   #endif
 }
 
 void loop(){
-  
+  Serial.print(random(1, 10));
+  Serial.print(",");
+  Serial.print(random(1, 100));
+  Serial.print(",");
+  Serial.print(random(1, 50));
+  Serial.println(); 
+  delay(1000);
 }

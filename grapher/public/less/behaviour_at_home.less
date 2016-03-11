@@ -1,0 +1,119 @@
+@import '_vars.less';
+@import '_mixins.less';
+/**
+  *  F O N T S
+  *
+  */
+
+@font-face {
+	font-family: 'Avenir';
+	src: url('../fonts/Avenir.ttc') format('truetype');
+	src: local('Avenir'), url('Avenir.ttc') format('truetype');
+}
+@font-face {
+	font-family: 'Avenir Next';
+	src: url('../fonts/AvenirNext-Bold.ttf') format('truetype');
+	// src: local('Avenir Next'), url('Avenir Next.ttc') format('truetype');
+}
+
+
+@font-big:    70px;
+@font-normal: 31px;
+@font-small:  22px;
+
+/**
+  *  C O L O R S
+  *
+  */
+@tan :#EBE5DC;
+@red: red;
+@green: #A9C738;
+@margin-left: 100px;
+@black: #363636;
+@gray-mid: #808080;
+
+/**
+  * G E N E R A L
+  *
+  */
+	.img-show{
+		opacity: 1 !important;
+	}
+body{
+  background-color: @tan;//lighten(green, 30%);
+  color: white;
+  position: relative;
+  margin: 0;
+  font-family: "Avenir", "Avenir Next", "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+h1,h2.h3,h4,h5,h6{
+  font-family: "Avenir Next", "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-weight: 900;
+  font-weight: 900;
+  line-height: 1.1em;
+  text-transform: uppercase;
+}
+.canvas{
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+.geometry{
+  fill:@green;
+  &.op-5{
+    fill-opacity: .5;
+  }
+  &.op-7{
+    fill-opacity: .8;
+  }
+}
+h1{
+  margin: 1.5em 0 0 2em;
+  margin-left: @margin-left;
+  width: 50%;
+  font-size: @font-big;
+}
+.copy,.instructions{
+  .copy();
+}
+.copy{
+  position: absolute;
+  display: block;
+  font-size: @font-normal;
+  line-height: 1.3em;
+  .transition(all 300ms ease-in );
+	text-align: justify;
+}
+.instructions{
+  position: fixed !important;
+  font-size: @font-small;
+  line-height: 1.4em;
+	text-align: left;
+	color:@gray-mid;
+}
+
+section{
+  position: absolute;
+  top:0;
+  left: 0;
+  .main{
+  }
+  .secondary{
+    &.copy, &.instructions{
+      width: 33%;
+      position: relative;
+      // margin-top: 16em;
+      margin-left: @margin-left;
+      opacity: 0;
+    }
+    &h4{
+      color: @black;
+      opacity: 0;
+    }
+    svg &{
+      // opacity: 0;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    title= title
+    //- link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/behaviour_at_home.css')
+    link( rel='shortcut icon' type='image/x-icon' href='/favicon.ico')
+    script(src="/socket.io/socket.io.js")
+    script
+      |var socket = io.connect("http://localhost:3000");
+  body
+    block main
+    block content_two
+    
+    script(src="/bower_components/jquery/dist/jquery.min.js")
+    script(src="/bower_components/quojs/quo.standalone.js")
+    //- script(src= "/javascripts/behaviour_at_home_client.js")
+    script(src= "/javascripts/db.js")
+    script(src= "/javascripts/main.js")
