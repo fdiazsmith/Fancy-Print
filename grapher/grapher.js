@@ -22,6 +22,17 @@ if (Meteor.isClient) {
         console.log("dfata ");
       });
     });
-
+  socket.on("data-event", function (data) {
+    for(var key in objTag) {
+      if(objTag[key].hasOwnProperty && data.search(key) !== -1) {
+          console.log("found it");
+          console.log(objTag[key], key);
+          BATH.catObject.stop();
+          BATH.welcomeScreen.stop();
+          var thisTAG = objTag[key];
+          BATH.welcomeScreen.hide(function(){BATH.catObject.show( thisTAG ) } );
+      }
+    }
+  });
 
 };

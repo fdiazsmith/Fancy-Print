@@ -1,4 +1,4 @@
-
+socket = io('localhost:3000/');
 
 
 if (Meteor.isServer) {
@@ -30,7 +30,7 @@ if (Meteor.isServer) {
 
   });
   // define the websocket connection using the `io` global variable
-    var socket = io('localhost:3000/');
+    
 
     // subscribe to a data feed
     socket.emit('subscribe', 'data-feed-name-goes-here');
