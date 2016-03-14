@@ -1,3 +1,4 @@
+
 if (Meteor.isClient) {
   // counter starts at 0
   Session.setDefault('counter', 0);
@@ -14,5 +15,13 @@ if (Meteor.isClient) {
       Session.set('counter', Session.get('counter') + 1);
     }
   });
-}
 
+
+  Tracker.autorun(function () {
+      Meteor.subscribe("dataToGraph", function (argument) {
+        console.log("dfata ");
+      });
+    });
+
+
+};
