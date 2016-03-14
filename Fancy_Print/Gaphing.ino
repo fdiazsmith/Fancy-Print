@@ -40,11 +40,17 @@ void setup() {
 }
 
 void loop(){
-  Serial.print(random(1, 10));
+  // Serial.print(33333);//random(1, 10));
+  // Serial.print(",");
+  // Serial.write(33333);//random(1, 10));
+  // // Serial.print(2);//random(1, 100));
+  // Serial.print(",");
+  // Serial.print(1);//random(1, 50));
+  Serial.print(1);
   Serial.print(",");
-  Serial.print(random(1, 100));
-  Serial.print(",");
-  Serial.print(random(1, 50));
+  Serial.print(3);
+  // Serial.write(random(0, 1023));//random(1, 50));
+  // Serial.write(1);
   Serial.println(); 
   delay(1000);
 }

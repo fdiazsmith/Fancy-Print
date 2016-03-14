@@ -22,8 +22,8 @@ this is so other libraries can use it easier.
 #define d_MSB 6
 #define d_LSB 5
 
-#define NAME "MUSE - hand dial MPR121 Capacitive Touch sensor: Skippbuffer" 
-#define VERSION "0.4.3"
+#define NAME "Fancy Print" 
+#define VERSION "0.1"
 
 
 class Fancy_Print {
