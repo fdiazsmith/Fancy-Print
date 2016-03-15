@@ -1,8 +1,8 @@
 /*********************************************************
 Author: fer.
 **********************************************************/
-#define NAME "Fancy Print: graphing"
-#define VERSION "0.2"
+#define NAME_ "Fancy Print: graphing"
+#define VERSION_ "0.2"
 /*********************************************************
 
 **********************************************************/
@@ -34,8 +34,8 @@ void setup() {
     }
   #else
     Serial.begin(9600);
-   Serial.println(NAME);
-   Serial.println(VERSION);
+   Serial.println(NAME_);
+   Serial.println(VERSION_);
   #endif
 }
 
@@ -46,11 +46,11 @@ void loop(){
   // // Serial.print(2);//random(1, 100));
   // Serial.print(",");
   // Serial.print(1);//random(1, 50));
-  Serial.print(1);
+  Serial.print(random(0,1023));
   Serial.print(",");
-  Serial.print(3);
+  Serial.print(3.14679);
   // Serial.write(random(0, 1023));//random(1, 50));
   // Serial.write(1);
-  Serial.println(); 
+  Serial.println();
   delay(1000);
 }

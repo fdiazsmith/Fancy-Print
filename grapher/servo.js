@@ -6,37 +6,33 @@ function setPosition(position) {
   uint8View[0] = '0'.charCodeAt(0) + position;
   chrome.serial.send(connectionId, buffer, function() {});
 };
-var fds = "";
+var dataAssembly = "";
+var row_Index = 0;
+var colum_Index = 0;
+
+var dataStream =[];
+// dataStream.push([10]);
 function onReceive(receiveInfo) {
   if (receiveInfo.connectionId !== connectionId)
     return;
-
-  // console.dir(receiveInfo);
+  //NOTE: the Serial receives bytes. Data needs to be assembled into strings
+  //then split by  \n and ,
   var uint8View = new Uint8Array(receiveInfo.data);
-  var value = uint8View[uint8View.length - 1] - '0'.charCodeAt(0);
-  // var rotation = value * 18.0;
-  // while(String.fromCharCode(uint8View[0]) != 44){
-
-  // }
-  
-  
-
+  //Every character or group of characters append them to a running string
   for (var i = 0 ; i < uint8View.length ; i++) {
-    // uint8View[i] 
-  console.log(String.fromCharCode(uint8View[i]), uint8View);
-  if(String.fromCharCode(uint8View[i]) == 44){
-    console.log(fds);
-    console.log(">,<");
-    fds =0 ;
+    dataAssembly += String.fromCharCode(uint8View[i]);
   }
-  else{
-    fds += String.fromCharCode(uint8View[i]);
+  //Every carriage return get the line and split it.
+  if(dataAssembly.match("\n") !== null){
+    var lineBreak = dataAssembly.match("\n").index;
+    var row = dataAssembly.slice(0,lineBreak);
+    var columns = row.split(",");
+    dataStream[row_Index] = columns;
+    console.log(dataStream[row_Index]);
+    row_Index++;
+    //clear the data assembly, to prevent it from getting HUGE!
+    dataAssembly = "";
   }
-
-  }
-  console.log("**");
-  // document.getElementById('image').style.webkitTransform =
-  //   'rotateZ(' + rotation + 'deg)';
 };
 
 function onError(errorInfo) {

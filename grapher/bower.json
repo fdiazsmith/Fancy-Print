@@ -1,0 +1,27 @@
+{
+  "name": "Fancy Print Grapher",
+  "authors": [
+    "Fernando Diaz Smith <fdiazsmith@gmail.com>"
+  ],
+  "description": "A d3 graphing application for arduino debugging",
+  "main": "main.js",
+  "moduleType": [],
+  "keywords": [
+    "Arduino",
+    "Graphehing",
+    "D3"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "d3": "^3.5.16"
+  }
+}
