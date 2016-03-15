@@ -1,0 +1,68 @@
+#!/usr/local/bin/ bash
+
+#
+# Global variables.
+#
+
+APP="app"
+CONFIG="config"
+BUNDLE="build/bundle"
+CHROME="chrome"
+
+
+#
+# Help and usage info.
+#
+
+display_help() {
+  cat <<-EOF
+
+  A generic utility for running your app.
+  Feel free to open up and do your own changes.
+
+  Usage: start [options]
+  if using zsh: bash start [options]
+
+  Options:
+    --help             Display help
+    --env <env>        Set the environment (development, test, production)
+
+EOF
+  exit 0
+}
+
+#
+# Start your application.
+#
+
+# --load-and-launch-app=/path/to/app/ installs the unpacked application from the
+# given path, and launches it. If the application is already running it is reloaded
+#  with the updated content.
+# --app-id=ajjhbohkjpincjgiieeomimlgnll
+# launches an app already loaded into Chrome. It does not restart any previously
+# running app, but it does launch the new app with any updated content.
+
+start() {
+  echo "Opening Fancy Print Grapher App"
+  #TODO: make it work. If typed directly in terminal it works, it does not from here.
+  "$CHROME"
+}
+
+#
+# Handle arguments.
+#
+
+if [ $# -eq 0 ]; then
+  start
+else
+  while [ $# -ne 0 ]; do
+    case $1 in
+      -h|--help|help)       display_help ;;
+      -e|--env)             export NODE_ENV="$2"; shift ;;
+      *)                    display_help ;;
+    esac
+    shift
+  done
+
+  start $1
+fi
