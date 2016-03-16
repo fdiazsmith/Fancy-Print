@@ -1,5 +1,5 @@
 {
-  "name": "Generic grapher for arduino",
+  "name": "Fancy Print: grapher for arduino",
   "version": "0.1",
   "manifest_version": 2,
   "minimum_chrome_version": "23",
@@ -17,7 +17,6 @@
   },
 
   "permissions": [
-    "serial",
-    "videoCapture"
+    "serial"
   ]
 }

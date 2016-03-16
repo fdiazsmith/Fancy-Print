@@ -30,7 +30,13 @@ display_help() {
 EOF
   exit 0
 }
-
+#
+# SimpleHTTPServer
+#
+simpleServer(){
+  echo "Starting Python SimpleHTTPServer in port 8080"
+  cd grapher/ && python -m SimpleHTTPServer 8080
+}
 #
 # Start your application.
 #
@@ -58,6 +64,7 @@ else
   while [ $# -ne 0 ]; do
     case $1 in
       -h|--help|help)       display_help ;;
+      -p|--python|python)   simpleServer ;;
       -e|--env)             export NODE_ENV="$2"; shift ;;
       *)                    display_help ;;
     esac

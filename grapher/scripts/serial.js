@@ -1,11 +1,10 @@
 var connectionId = -1;
 //this is to move the servo
-function setPosition(position) {
-  var buffer = new ArrayBuffer(1);
-  var uint8View = new Uint8Array(buffer);
-  uint8View[0] = '0'.charCodeAt(0) + position;
-  chrome.serial.send(connectionId, buffer, function() {});
-};
+// Create new generic Event
+// MORE @-https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events
+var newLine = new Event('dataLine');
+
+
 var dataAssembly = "";
 var row_Index = 0;
 var colum_Index = 0;
@@ -28,7 +27,11 @@ function onReceive(receiveInfo) {
     var row = dataAssembly.slice(0,lineBreak);
     var columns = row.split(",");
     dataStream[row_Index] = columns;
-    console.log(dataStream[row_Index]);
+    // console.log(dataStream[row_Index]);
+    // Dispatch the newLine.
+    newLine.data = dataStream[row_Index];
+    newLine.error = false;
+    document.dispatchEvent(newLine);
     row_Index++;
     //clear the data assembly, to prevent it from getting HUGE!
     dataAssembly = "";
@@ -36,6 +39,8 @@ function onReceive(receiveInfo) {
 };
 
 function onError(errorInfo) {
+  newLine.error = errorInfo;
+  document.dispatchEvent(newLine);
   console.warn("Receive error on serial connection: " + errorInfo.error);
 };
 
@@ -84,22 +89,10 @@ function openSelectedPort() {
 }
 
 onload = function() {
-  var tv = document.getElementById('tv');
-  navigator.webkitGetUserMedia(
-      {video: true},
-      function(stream) {
-        console.log("NOT USING THE TV");
-        // tv.classList.add('working');
-        // document.getElementById('camera-output').src =
-        //     webkitURL.createObjectURL(stream);
-      },
-      function() {
-        tv.classList.add('broken');
-      });
 
-  document.getElementById('position-input').onchange = function() {
-    setPosition(parseInt(this.value, 10));
-  };
+  // document.getElementById('position-input').onchange = function() {
+  //   setPosition(parseInt(this.value, 10));
+  // };
 
   chrome.serial.getDevices(function(ports) {
     buildPortPicker(ports)
