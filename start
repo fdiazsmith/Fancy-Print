@@ -41,7 +41,7 @@ simpleServer(){
 # Start your application.
 #
 
-# --load-and-launch-app=/path/to/app/ installs the unpacked application from the
+# --load-and-launch-app=/Users/fdiazsmith/Documents/personal/repos/Fancy_Print/grapher installs the unpacked application from the
 # given path, and launches it. If the application is already running it is reloaded
 #  with the updated content.
 # --app-id=ajjhbohkjpincjgiieeomimlgnll

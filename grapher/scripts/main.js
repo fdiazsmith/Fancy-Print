@@ -1,72 +1,36 @@
 /**
   * Constructor – Create an object for the constructor methods
-  * TODO: _ http://bl.ocks.org/benjchristensen/2657838
-  *       - http://bl.ocks.org/mbostock/1256572
-  *       - http://kyrandale.com/viz/d3-smartphone-walking.html (Really nice for debuggin accel ) explore this
-  *       - http://bl.ocks.org/mbostock/3970883 (REally nice example of threshold encoding)
+  * EXPLORE: _ http://bl.ocks.org/benjchristensen/2657838
+  *          - http://bl.ocks.org/mbostock/1256572
+  *          - http://kyrandale.com/viz/d3-smartphone-walking.html (Really nice for debuggin accelerometer ) explore this
+  *          - http://bl.ocks.org/mbostock/3970883 (REally nice example of threshold encoding)
   * @class Grapher – 
   * @param {String} – type. What type of graph.
   *
   */
 
 var DummyData = [
-{"date":"24-Apr-07" , "close":	93.24},
-{"date":"25-Apr-07" , "close":	95.35},
-{"date":"26-Apr-07" , "close":	98.84},
-{"date":"27-Apr-07" , "close":	99.92},
-{"date":"30-Apr-07" , "close":	99.80},
-{"date":"1-May-07"  , "close":  99.47},
-{"date":"2-May-07"  , "close":  100.39},
-{"date":"3-May-07"  , "close":  100.40},
-{"date":"4-May-07"  , "close":  100.81},
-{"date":"7-May-07"  , "close":  103.92},
-{"date":"8-May-07"  , "close":  105.06},
-{"date":"9-May-07"  , "close":  106.88},
-{"date":"10-May-07" , "close":	107.34},
-{"date":"11-May-07" , "close":	108.74},
-{"date":"14-May-07" , "close":	109.36},
-{"date":"15-May-07" , "close":	107.52},
-{"date":"16-May-07" , "close":	107.34},
-{"date":"17-May-07" , "close":	109.44},
-{"date":"18-May-07" , "close":	110.02},
-{"date":"21-May-07" , "close":	111.98},
-{"date":"22-May-07" , "close":	113.54},
-{"date":"23-May-07" , "close":	112.89},
-{"date":"24-May-07" , "close":	110.69},
-{"date":"25-May-07" , "close":	113.62},
-{"date":"29-May-07" , "close":	114.35},
-{"date":"30-May-07" , "close":	118.77},
-{"date":"31-May-07" , "close":	121.19},
-{"date":"1-Jun-07"  , "close":  118.40},
-{"date":"4-Jun-07"  , "close":  121.33},
-{"date":"5-Jun-07"  , "close":  122.67},
-{"date":"6-Jun-07"  , "close":  123.64},
-{"date":"7-Jun-07"  , "close":  124.07},
-{"date":"8-Jun-07"  , "close":  124.49},
-{"date":"11-Jun-07" , "close":	120.19},
-{"date":"12-Jun-07" , "close":	120.38},
-{"date":"13-Jun-07" , "close":	117.50},
-{"date":"14-Jun-07" , "close":	118.75},
-{"date":"15-Jun-07" , "close":	120.50},
-{"date":"18-Jun-07" , "close":	125.09},
-{"date":"19-Jun-07" , "close":	123.66},
-{"date":"20-Jun-07" , "close":	121.55},
-{"date":"21-Jun-07" , "close":	123.90},
-{"date":"22-Jun-07" , "close":	123.00},
-{"date":"25-Jun-07" , "close":	122.34},
-{"date":"26-Jun-07" , "close":	119.65},
-{"date":"27-Jun-07" , "close":	121.89},
-{"date":"28-Jun-07" , "close":	120.56},
-{"date":"29-Jun-07" , "close":	122.04},
-{"date":"2-Jul-07"  , "close":  121.26},
-{"date":"3-Jul-07"  , "close":  127.17},
-{"date":"5-Jul-07"  , "close":  132.75}
+  [42, 17],
+  [26, 26],
+  [44, 15],
+  [45, 35],
+  [13, 49],
+  [33, 34],
+  [27 ,40]
 ];
+
+
+
+
+
+
+
+
 // DummyData =  DummyData.reduce(function(o, v, i) {
 //           o[i] = v;
 //           return o;
 //         }, {});
-
+      dddd =[{x:3,y:9},{x:14,y:5},{x:3,y:5},{x:6,y:16},];
   Grapher = function (type){
     console.log("Inside new Grapher class");
     // P U B L I C
@@ -74,142 +38,153 @@ var DummyData = [
     self.margin = {top: 20, right: 20, bottom: 30, left: 50};
     self.width = 960 - self.margin.left - self.margin.right;
     self.height = 500 - self.margin.top - self.margin.bottom;
-    // P R I V A T E
-    // formatDate("%d-%b-%y");
     self.dateFormat = "%d-%b-%y";
-    // var formatDate = d3.time.format("%d-%b-%y");
+    // P R I V A T E
 
-    var x = d3.time.scale()
+    //Define D3 function for later use.
+    var x_scale = d3.scale.linear()//time.scale()
         .range([0, self.width]);
 
-    var y = d3.scale.linear()
+    var y_scale = d3.scale.linear()
         .range([self.height, 0]);
 
     var xAxis = d3.svg.axis()
-        .scale(x)
+        .scale(x_scale)
         .orient("bottom");
 
     var yAxis = d3.svg.axis()
-        .scale(y)
+        .scale(y_scale)
         .orient("left");
 
     var line = d3.svg.line()
-        .x(function(d) { return x(d.date); })
-        .y(function(d) { return y(d.close); });
-
+        .x(function(d,i) { return x_scale(i+1); })
+        .y(function(d) { return y_scale(d[0]); });
+    //Create "canvas".
     var svg = d3.select("#graph").append("svg")
         .attr("width", self.width + self.margin.left + self.margin.right)
         .attr("height", self.height + self.margin.top + self.margin.bottom)
       .append("g")
         .attr("transform", "translate(" + self.margin.left + "," + self.margin.top + ")");
-    // self.onDataReceived(function(){
-    //   console.log("jkasdfksj");
-    // })
-    // Listen for the event.
-    // self.onDataReceived(){
+
+    document.addEventListener('dataLine', function (e) {
+      if (e.error) throw e.error;
+      //Update data array and call the update method
+
+      if(e.data[1] != undefined) { // if the second on is not undefined
+        console.log("received ",e.data);
+        //good place to put self.formatIncomingData(e);
+        self.data.push(e.data);
+        self.update();
+      }
+
+    }, false);
+
+      self.data = DummyData;
+      var line_1 = svg.append("path")
+            .datum(self.data)
+            .attr("class", "line")
+            .attr("d", line);
+
+      self.update = function () {
+        console.log("max",d3.max(self.data, function(d) { return d[0]; }));
+        // console.log("min",d3.min(self.data, function(d) { return d[0]; }))
+        x_scale.domain([0,self.data.length])//d3.extent(dddd, function(d) { return d.x; })
+        y_scale.domain([0,d3.max(self.data, function(d) { return d[0]; })]);
+        //Add the X Axis
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + self.height + ")")
+            .call(xAxis);
+        //Add the Y Axis
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis)
+          .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", ".71em")
+            .style("text-anchor", "end")
+            .text("ARDUINO VARS");
+
+        var circle = svg.selectAll('circle')
+                        .data(self.data);
+            circle.exit().remove();
+
+            circle.enter().append("circle")
+                  .attr("r", 1.5);
+
+            circle.attr("cx", function(d,i) {return x_scale(i+1); })
+                  .attr("cy", function(d) { return y_scale(d[0]); });
+
+        line_1.attr("d", line);
+
+      };
+      self.update();
+
+
+
+
+    // d3.tsv("data.tsv", self.formatIncomingData, function(error, data) {
+    //   if (error) throw error;
+    //   console.log(data);
     //
-    // }
-//     document.addEventListener('dataLine', function (e) {
-//       // console.log("New line: ", e.data)
-//       // convert into an object
-//       var data = e.data.reduce(function(o, v, i) {
-//                 o[i] = v;
-//                 return o;
-//               }, {});
-//
-//       data.date = new Date().getTime();
-//       data.close = Math.random() * 100;
-//         if (e.error) throw e.error;
-// console.log(data);
-//         // x.domain(d3.extent(data, function(d) { return parseInt(d["0"]); }));
-//         // y.domain(d3.extent(data, function(d) { return parseInt(d["1"]); }));
-//         x.domain(d3.extent(data, function(d) { return d.date; }));
-//         y.domain(d3.extent(data, function(d) { return d.close; }));
-//
-//         svg.append("g")
-//             .attr("class", "x axis")
-//             .attr("transform", "translate(0," + self.height + ")")
-//             .call(xAxis);
-//
-//         svg.append("g")
-//             .attr("class", "y axis")
-//             .call(yAxis)
-//           .append("text")
-//             .attr("transform", "rotate(-90)")
-//             .attr("y", 6)
-//             .attr("dy", ".71em")
-//             .style("text-anchor", "end")
-//             .text("Price ($)");
-//
-//         svg.append("path")
-//             .datum(data)
-//             .attr("class", "line")
-//             .attr("d", line);
-//     }, false);
+    //
+    //
+    // // for (var i = 0; i < DummyData.length; i++) {
+    //   // console.log(DummyData[i])
+    //   // data = DummyData[i];
+    //   x.domain(d3.extent(data, function(d) { return d.date; }));
+    //   y.domain(d3.extent(data, function(d) { return d.close; }));
+    //
+    //   svg.append("g")
+    //       .attr("class", "x axis")
+    //       .attr("transform", "translate(0," + self.height + ")")
+    //       .call(xAxis);
+    //
+    //   svg.append("g")
+    //       .attr("class", "y axis")
+    //       .call(yAxis)
+    //     .append("text")
+    //       .attr("transform", "rotate(-90)")
+    //       .attr("y", 6)
+    //       .attr("dy", ".71em")
+    //       .style("text-anchor", "end")
+    //       .text("Price ($)");
+    //
+    //   svg.append("path")
+    //       .datum(data)
+    //       .attr("class", "line")
+    //       .attr("d", line);
+    // // }
+    //
+    // });
 
 
 
 
-    d3.tsv("data.tsv", self.formatIncomingData, function(error, data) {
-      if (error) throw error;
-      console.log(data);
+  }
 
 
 
-    // for (var i = 0; i < DummyData.length; i++) {
-      // console.log(DummyData[i])
-      // data = DummyData[i];
-      x.domain(d3.extent(data, function(d) { return d.date; }));
-      y.domain(d3.extent(data, function(d) { return d.close; }));
-
-      svg.append("g")
-          .attr("class", "x axis")
-          .attr("transform", "translate(0," + self.height + ")")
-          .call(xAxis);
-
-      svg.append("g")
-          .attr("class", "y axis")
-          .call(yAxis)
-        .append("text")
-          .attr("transform", "rotate(-90)")
-          .attr("y", 6)
-          .attr("dy", ".71em")
-          .style("text-anchor", "end")
-          .text("Price ($)");
-
-      svg.append("path")
-          .datum(data)
-          .attr("class", "line")
-          .attr("d", line);
-    // }
-
-    });
-
-
-
-
-
-
-
-
-
-
-
-    function type(d) {
+/**
+  * (D3 Time formatting)[https://github.com/mbostock/d3/wiki/Time-Formatting]
+  *
+  * @method formatIncomingData - converts string in to integer or floats and assigns
+  *                              them to their right column.
+  * @param {String} - D3 specific string format
+  */
+Grapher.prototype.formatIncomingData = function(d, how){
+    if(how != undefined){
+      for (var i = 0; i < d.length; i++) {
+        d[i] = parseInt(d[i]);
+      }
+      return d;
+    }
+    else{
       d.date = d3.time.format("%d-%b-%y").parse(d.date);
       d.close = +d.close;
       return d;
     }
-  }
-Grapher.prototype.ffff = d3.time.format;
-/**
-  * @method formatIncomingData - converts string in to integer or floats and assigns
-  *                              them to their right column.
-  */
-Grapher.prototype.formatIncomingData = function(d){
-    d.date = d3.time.format("%d-%b-%y").parse(d.date);
-    d.close = +d.close;
-    return d;
 };
 Grapher.prototype.onReceive = function(e){
   console.log("Grapher on receive ", e);
@@ -221,8 +196,8 @@ Grapher.prototype.bar = function(){
 };
 
 $(document).ready(function(){
-  // thisGraph = new Grapher();
-typeOne();
+  thisGraph = new Grapher();
+// typeOne();
 });
 
 
@@ -239,8 +214,9 @@ $('body').on('keypress', function(e){
 function typeOne() {
   console.log("type one");
   var n = 40,
-    random = d3.random.normal(0, 0.2),
-    data = DummyData;//d3.range(n).map(random);
+    random = d3.random.normal(0, 0.2);
+    // data = DummyData;//d3.range(n).map(random);
+    data = d3.range(n).map(random);
 
 var margin = {top: 20, right: 20, bottom: 20, left: 40},
     width = 960 - margin.left - margin.right,
